@@ -23,7 +23,7 @@ export default function InstructionsComponent() {
       {/* First bordered area */}
       <div className="border p-4 m-4 w-full max-w-xl flex justify-center">
         {/* Content for the first area goes here */}
-        <h1 className="text-3xl underline font-bold text-green-400 bg-green-600">
+        <h1 className="text-3xl underline font-vt323 font-bold text-black bg-green-600">
           <Link
             href="https://www.polytope.net/hedrondude/polytera.htm"
             target="_blank"
@@ -36,7 +36,7 @@ export default function InstructionsComponent() {
       {/* Second area below the first */}
       <div className="border p-4 m-4 w-full max-w-xl flex justify-center">
         {/* Content for the second area goes here */}
-        <h1 className="text-3xl underline font-bold text-green-400 bg-green-600">
+        <h1 className="text-3xl underline font-vt323 font-bold text-black bg-green-600">
           <Link
             href="https://www.polytope.net/hedrondude/polytera.htm"
             target="_blank"
