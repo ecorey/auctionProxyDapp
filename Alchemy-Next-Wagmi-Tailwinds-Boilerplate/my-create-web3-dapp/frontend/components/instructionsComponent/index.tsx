@@ -79,6 +79,7 @@ function WalletBalance(params: { address: `0x${string}` }) {
 }
 
 // READ CONTRACT FUNCTIONS
+// address: 0x22090522d78127110f260131E0743228098Db04A (previous smart contract for testing)
 
 /**
  * @notice returns the owner of the contract
