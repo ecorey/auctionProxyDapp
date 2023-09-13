@@ -203,8 +203,7 @@ function GetCurrentBid() {
 
   if (isLoading) return <div>Fetching Current Bid....</div>;
   if (isError) return <div>Error fetching Current Bid</div>;
-  if (currentBid == 0)
-    return <div>Current Bid: Starting Soon...🙇 🙇 ٩̋(ᵔ ᵕ ᵔ)و</div>;
+  if (currentBid == 0) return <div>Current Bid: Starting Soon...🙇 🙇</div>;
   if (currentBid !== null) {
     return <div> console.log(currentBid.toString()); </div>;
   }
