@@ -20,6 +20,17 @@ import Link from "next/link";
 export default function InstructionsComponent() {
   return (
     <div className="flex flex-col justify-center items-center bg-green-400 w-full min-h-screen">
+      {/* Title above the two bordered boxes */}
+      <h1 className="text-8xl font-bold font-vt323 mb-4">
+        You Dropped This King
+      </h1>
+      <h1 className="text-2xl font-bold font-vt323 mb-4">
+        Auction Clearing House
+      </h1>
+      <h1 className="text-2xl font-bold font-vt323 italic  mb-4">
+        Limited Time
+      </h1>
+
       {/* First bordered area */}
       <div className="border p-4 m-4 w-full max-w-xl flex justify-center">
         {/* Content for the first area goes here */}
