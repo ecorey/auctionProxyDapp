@@ -1,4 +1,4 @@
-const contractABI: any[] = [
+export const contractABI: any[] = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
