@@ -12,9 +12,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useEffect, useState } from "react";
-
 import Image from "next/image";
-import myImage from "./images/11.gif";
 import Link from "next/link";
 import { contractABI } from "./contractABI";
 
@@ -26,9 +24,7 @@ function PageBody() {
   );
 }
 
-/**
- * contains the called components
- */
+// FUNCTIONS
 
 function WalletInfo() {
   const { address, isConnecting, isDisconnected } = useAccount();
@@ -71,9 +67,6 @@ function WalletInfo() {
   );
 }
 
-/**
- * @dev returns the wallet blance
- */
 function WalletBalance(params: { address: `0x${string}` }) {
   const { data, isError, isLoading } = useBalance({
     address: params.address,
@@ -88,7 +81,7 @@ function WalletBalance(params: { address: `0x${string}` }) {
   );
 }
 
-// READ FUNCTIONS
+// READ CONTRACT FUNCTIONS
 
 /**
  * @notice returns the owner of the contract
@@ -114,6 +107,9 @@ function Owner() {
   return <div>Owner Address: {owner}</div>;
 }
 
+/**
+ * @notice returns is auction is live
+ */
 function AuctionLive() {
   const { data, isError, isLoading } = useContractRead({
     address: "0x22090522d78127110f260131E0743228098Db04A",
@@ -135,6 +131,9 @@ function AuctionLive() {
   return <div>Auction is Live: {live.toString()}</div>;
 }
 
+/**
+ * @notice returns the contract deploy time
+ */
 function DeployedTime() {
   const { data, isError, isLoading } = useContractRead({
     address: "0x22090522d78127110f260131E0743228098Db04A",
@@ -156,7 +155,9 @@ function DeployedTime() {
   return <div>Deployed TIme: {deployedT.toString()}</div>;
 }
 
-// DOES NOT NEED STATE AS STAYS SAME FOR AUCTION
+/**
+ * @notice returns the aution item
+ */
 function AuctionItem() {
   const { data, isError, isLoading } = useContractRead({
     address: "0x22090522d78127110f260131E0743228098Db04A",
@@ -180,7 +181,12 @@ function AuctionItem() {
 }
 
 // NEEDS TO BE A STATE SO ITS UPDATED
+/**
+ * @notice returns the current bid for the contract
+ */
 function GetCurrentBid() {
+  const [currentBid, setCurrentBid] = useState<number | null>(null);
+
   const { data, isError, isLoading } = useContractRead({
     address: "0x22090522d78127110f260131E0743228098Db04A",
     abi: contractABI,
@@ -188,21 +194,25 @@ function GetCurrentBid() {
     functionName: "getCurrentBid",
     onSuccess(data) {
       console.log("Success Data:", data, "Type:", typeof data);
+      setCurrentBid(Number(data));
     },
     onError(error) {
       console.log("Error", error);
     },
   });
 
-  const currentBid: any = data;
-
   if (isLoading) return <div>Fetching Current Bid....</div>;
   if (isError) return <div>Error fetching Current Bid</div>;
   if (currentBid == 0)
     return <div>Current Bid: Starting Soon...🙇 🙇 ٩̋(ᵔ ᵕ ᵔ)و</div>;
-  return <div>Current Bid: {currentBid.toString()}</div>;
+  if (currentBid !== null) {
+    return <div> console.log(currentBid.toString()); </div>;
+  }
 }
 
+/**
+ * @notice returns the start time
+ */
 function StartTime() {
   const { data, isError, isLoading } = useContractRead({
     address: "0x22090522d78127110f260131E0743228098Db04A",
@@ -225,6 +235,9 @@ function StartTime() {
   return <div>Current Bid: {startTime.toString()}</div>;
 }
 
+/**
+ * @notice returns the stop time
+ */
 function StopTime() {
   const { data, isError, isLoading } = useContractRead({
     address: "0x22090522d78127110f260131E0743228098Db04A",
@@ -247,6 +260,9 @@ function StopTime() {
   return <div>Current Bid: {stopTime.toString()}</div>;
 }
 
+/**
+ * @notice returns the winner
+ */
 function Winner() {
   const { data, isError, isLoading } = useContractRead({
     address: "0x22090522d78127110f260131E0743228098Db04A",
@@ -270,7 +286,8 @@ function Winner() {
   return <div>Winner: {winner.toString()}</div>;
 }
 
-// RETURN ***
+// RETURN FUNCTION
+// TITLE AND 2 MAIN COMPONENTS
 
 export default function InstructionsComponent() {
   return (
