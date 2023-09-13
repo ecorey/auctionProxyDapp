@@ -317,12 +317,7 @@ export default function InstructionsComponent() {
       <div className="border p-4 m-4 w-full max-w-xl flex-col text-center justify-center">
         {/* Content for the second area goes here */}
         <h1 className="text-3xl underline font-vt323 font-bold text-black bg-green-600">
-          <Link
-            href="https://www.polytope.net/hedrondude/polytera.htm"
-            target="_blank"
-          >
-            Part of Second Group
-          </Link>
+        
         </h1>
         <br />
 
