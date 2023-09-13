@@ -42,13 +42,7 @@ function WalletInfo() {
   if (address)
     return (
       <div className="text-1xl font-bold font-vt323">
-        <DeployedTime></DeployedTime>
-        <AuctionLive></AuctionLive>
-        <StartTime></StartTime>
-        <StopTime></StopTime>
-        <AuctionItem></AuctionItem>
-        <GetCurrentBid></GetCurrentBid>
-        <Winner></Winner>
+       
       </div>
     );
   if (isConnecting)
