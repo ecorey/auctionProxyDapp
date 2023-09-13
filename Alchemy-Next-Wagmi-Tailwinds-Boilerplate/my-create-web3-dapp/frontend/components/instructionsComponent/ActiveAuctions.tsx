@@ -1,50 +1,45 @@
 import { useEffect, useState } from "react";
 import {
-    useAccount,
-    useBalance,
-    useContractRead,
-    useContractWrite,
-    useNetwork,
-  } from "wagmi";
-  
+  useContractRead,
+  useContractWrite,
+} from "wagmi";
+import ethers from 'ethers';
 import { contractABI } from "./contractABI";
-import {factoryContractABI} from "./factoryContractAbi";
+import { factoryContractABI } from "./factoryContractAbi";
 
 function ActiveAuctions() {
   const { data, isLoading, isError } = useContractRead({
-    address: "0x852e6601868c0F1d7203Eb2faE890172b6401882", 
+    address: "0x852e6601868c0F1d7203Eb2faE890172b6401882",
     abi: factoryContractABI,
     functionName: "auctions",
   });
 
-  const [activeAuctions, setActiveAuctions] = useState<string[]>([]); // Assuming the auction addresses are of type string
+  const [activeAuctions, setActiveAuctions] = useState<string[]>([]);
   const [currentBids, setCurrentBids] = useState<number[]>([]);
+  const [bidAmount, setBidAmount] = useState(""); // State for bid amount input
 
   useEffect(() => {
     if (!data) return;
 
-    // Fetch auction statuses for each auction address
     const fetchAuctionStatuses = async () => {
       const auctionStatuses = await Promise.all(
         data.map(async (auctionAddress: string) => {
           const statusData = await useContractRead({
-            address: `0x${auctionAddress}`, // Prepend "0x" to the auction address
+            address: `0x${auctionAddress}`,
             abi: contractABI,
             functionName: "getStatus",
           });
-          return statusData.data as unknown as number; // Type assertion to number
+          return statusData.data as unknown as number;
         })
       );
 
-      // Filter auctions based on their status
       const activeAuctionAddresses = data.filter((_, index) => {
-        return auctionStatuses[index] === 1; // 1 corresponds to STARTED status
+        return auctionStatuses[index] === 1;
       });
 
       setActiveAuctions(activeAuctionAddresses);
     };
 
-    // Fetch current bids for each active auction
     const fetchCurrentBids = async () => {
       const bids = await Promise.all(
         activeAuctions.map(async (auctionAddress: string) => {
@@ -64,6 +59,26 @@ function ActiveAuctions() {
     fetchCurrentBids();
   }, [data, activeAuctions]);
 
+  const handleBid = async (auctionAddress: string) => {
+    if (!bidAmount) {
+      alert("Please enter a bid amount.");
+      return;
+    }
+
+    try {
+      const bidAmountInWei = ethers.parseEther(bidAmount); // Convert bid amount to Wei
+
+      // Here we need to implement bid function from factorycontract
+
+      // Clear the bid amount input after placing the bid
+      setBidAmount("");
+      alert(`Bid placed successfully: ${bidAmount} ETH`);
+    } catch (error) {
+      console.error("Error placing bid:", error);
+      alert("Error placing bid. Please try again.");
+    }
+  };
+
   if (isLoading) {
     return <div className="text-lg font-bold font-vt323 mb-4">Loading active auctions...</div>;
   }
@@ -81,15 +96,23 @@ function ActiveAuctions() {
       <h2>Active Auctions</h2>
       {activeAuctions.map((auctionAddress, index) => (
         <div key={index}>
-          <p 
-            className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-2"
-          >
+          <p className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-2">
             {auctionAddress}
           </p>
           <p className="text-lg font-bold font-vt323">
             Current Bid: {currentBids[index]} ETH
           </p>
-          <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">
+          <input
+            type="number"
+            placeholder="Enter Bid Amount (ETH)"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(e.target.value)}
+            className="text-lg font-bold font-vt323 mb-2 p-2 mx-44"
+            />
+          <button
+            className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4 mx-44"
+            onClick={() => handleBid(auctionAddress)}
+          >
             Bid Auction
           </button>
         </div>

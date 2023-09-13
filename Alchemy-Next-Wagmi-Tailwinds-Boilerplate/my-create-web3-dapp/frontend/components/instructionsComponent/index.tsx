@@ -299,6 +299,7 @@ type addressType = `0x${string}`
 export default function InstructionsComponent() {
   const { address, isConnecting, isDisconnected } = useAccount();
 
+
   return (
     <div className="flex flex-col justify-center items-center bg-green-400 w-full min-h-screen">
       {/* Title above the two bordered boxes */}
@@ -330,6 +331,7 @@ export default function InstructionsComponent() {
           </Link>
         </h1>
         <br />
+
         <div>
           {
             address ? (
@@ -339,15 +341,11 @@ export default function InstructionsComponent() {
                 <ActiveAuctions />
 
 
-                {/* <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">Create Auction</button>
-                <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">Current Auctions</button>
-                <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">Bid Auction</button>
-                <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">See Winner</button> */}
               </div>
             ) : (
               <h1 className="text-2xl font-bold font-vt323 italic  mb-4">
-              Please Connect your wallet
-            </h1>
+                Please Connect your wallet
+              </h1>
             )
 
             
