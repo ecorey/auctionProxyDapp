@@ -24,7 +24,7 @@ export default function InstructionsComponent() {
       <h1 className="text-8xl font-bold font-vt323 mb-4">
         You Dropped This King
       </h1>
-      <h1 className="text-2xl font-bold font-vt323 mb-4">
+      <h1 className="text-4xl font-bold font-vt323 mb-4">
         Auction Clearing House
       </h1>
       <h1 className="text-2xl font-bold font-vt323 italic  mb-4">
