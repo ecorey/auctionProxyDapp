@@ -15,6 +15,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { contractABI } from "./contractABI";
+// import { factoryContractABI } from "./factoryContractAbi";
+
+import ActiveAuctions from './ActiveAuctions';
 
 function PageBody() {
   return (
@@ -288,7 +291,14 @@ function Winner() {
 // RETURN FUNCTION
 // TITLE AND 2 MAIN COMPONENTS
 
+
+type addressType = `0x${string}`
+
+
+
 export default function InstructionsComponent() {
+  const { address, isConnecting, isDisconnected } = useAccount();
+
   return (
     <div className="flex flex-col justify-center items-center bg-green-400 w-full min-h-screen">
       {/* Title above the two bordered boxes */}
@@ -309,7 +319,7 @@ export default function InstructionsComponent() {
       </div>
 
       {/* Second area below the first */}
-      <div className="border p-4 m-4 w-full max-w-xl flex justify-center">
+      <div className="border p-4 m-4 w-full max-w-xl flex-col text-center justify-center">
         {/* Content for the second area goes here */}
         <h1 className="text-3xl underline font-vt323 font-bold text-black bg-green-600">
           <Link
@@ -319,6 +329,31 @@ export default function InstructionsComponent() {
             Part of Second Group
           </Link>
         </h1>
+        <br />
+        <div>
+          {
+            address ? (
+              <div className="flex flex-col">
+                <h1 className="text-2xl font-bold font-vt323 italic  mb-4">Current Auctions</h1>
+
+                <ActiveAuctions />
+
+
+                {/* <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">Create Auction</button>
+                <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">Current Auctions</button>
+                <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">Bid Auction</button>
+                <button className="text-lg font-bold font-vt323 italic bg-black rounded-lg text-white p-2 mb-4">See Winner</button> */}
+              </div>
+            ) : (
+              <h1 className="text-2xl font-bold font-vt323 italic  mb-4">
+              Please Connect your wallet
+            </h1>
+            )
+
+            
+          }
+          
+        </div>
       </div>
     </div>
   );
